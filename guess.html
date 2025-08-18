@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Number Gues</title>
+    <meta charset="UTF-8">
+    <audio id="winsound" src="assets\audio\winsound.mp3" preload="auto"></audio>
+    <audio id="lostsound" src="assets\audio\lostsound.mp3" preload="auto"></audio>
+    <style>
+        button{
+            font-family: monospace;
+            padding: 5pt;
+            border-radius: 20pt;
+            border: none;
+            background-color:  #66FF00;
+            color: black;
+        }
+        input{
+            border: none;
+            border-radius: 10pt;
+            padding: 5pt;
+        }
+    </style>
+</head>
+
+<body
+    style="background-color: black; color: white; text-align: center; font-family: monospace;">
+    <h1>Guess The Number</h1>
+    <button id="playbutton">Let's Play</button>
+    <h2 id="rule" style="display: hidden;"></h2>
+    <p id="rule2" style="display: hidden;"></p>
+
+    <p id="firstguess" style="display: none;">Enter your 1<sup>st</sup> guess:
+        <input type="number" id="num1"><br><br> <button id="check1">Check</button>
+    </p>
+    <h4 id="validate1" style="display: hidden; color: #EE4B2B;"></h4>
+
+    <p id="secondguess" style="display: none;">Enter your 2<sup>nd</sup> guess:
+        <input type="number" id="num2"><br><br> <button id="check2">Check</button>
+    </p>
+    <h4 id="validate2" style="display: hidden; color: #EE4B2B;"></h4>
+
+    <p id="thiguess" style="display: none;">Enter your 3<sup>rd</sup> guess:
+        <input type="number" id="num3"><br><br> <button id="check3">Check</button>
+    </p>
+    <h4 id="validate3" style="display: hidden; color: #EE4B2B;"></h4>
+
+    <script>
+
+        // var colors = ["#EE4B2B", "blue", "#66FF00"];
+        // var currentIndex = 0;
+
+        // function changeColor(){
+
+        //     document.body.style.backgroundColor = colors[currentIndex];
+            
+        //     currentIndex = (currentIndex + 1) % colors.length;
+        // }
+        // setInterval(changeColor, 1000);
+
+        
+        var winsound = document.getElementById("winsound");
+        var lostsound = document.getElementById("lostsound");
+
+        document.getElementById("playbutton").addEventListener('click', function () {
+            var ruleElement = document.getElementById("rule");
+            ruleElement.innerText = "There are totally 3 chances for you";
+            ruleElement.style.display = "block";
+
+            var rule2Element = document.getElementById("rule2");
+            rule2Element.innerText = "(Enter the number between 1 to 10)";
+            rule2Element.style.display = "block";
+            document.getElementById("firstguess").style.display = "block";
+        })
+
+        var orinum = Math.floor(Math.random() * 10) + 1;
+        console.log(orinum);
+
+        document.getElementById("check1").addEventListener('click', function () {
+
+            var num1 = document.getElementById("num1");
+
+            var num1Value = num1.value;
+            if (num1Value >= 1 && num1Value <= 10) {
+
+                if (orinum == num1Value) {
+                    winsound.play();
+                    var validate1id = document.getElementById("validate1");
+                    validate1id.innerHTML = "&#128511; You Won &#128511;";
+                    validate1id.style.color = "#66FF00";
+                    validate1id.style.display = "block";
+                }
+
+                else {
+                    lostsound.play();
+                    console.log(num1Value);
+                    var validate1id = document.getElementById("validate1");
+                    validate1id.innerHTML = "&#129314; It is wrong &#129314;";
+
+                    document.getElementById("secondguess").style.display = "block";
+
+                    document.getElementById("check2").addEventListener('click', function () {
+
+                        var num2 = document.getElementById("num2");
+
+                        var num2Value = num2.value;
+
+                        if (num2Value >= 1 && num2Value <= 10) {
+                            if (orinum == num2Value) {
+                                winsound.play();
+
+
+                                var validate2id = document.getElementById("validate2");
+                                validate2id.innerHTML = "&#128511; You Won &#128511;";
+                                validate2id.style.color = "#66FF00";
+                                validate2id.style.display = "block";
+                            }
+                            else {
+                                lostsound.play();
+
+                                console.log(num2Value);
+                                var validate2id = document.getElementById("validate2");
+                                validate2id.innerHTML = "&#129314; It is wrong &#129314;";
+                                validate2id.style.color = "#EE4B2B";
+                                document.getElementById("thiguess").style.display = "block";
+
+                                document.getElementById("check3").addEventListener('click', function () {
+
+                                    var num3 = document.getElementById("num3");
+
+                                    var num3Value = num3.value;
+
+                                    if (num3Value >= 1 && num3Value <= 10) {
+                                        if (orinum == num3Value) {
+                                            var validate3id = document.getElementById("validate3");
+                                            validate3id.innerHTML = "&#128511; You Won &#128511;";
+                                            validate3id.style.color = "#66FF00";
+                                            validate3id.style.display = "block";
+                                            winsound.play();
+
+                                        }
+                                        else {
+                                            lostsound.play();
+
+                                            console.log(num3Value);
+                                            var validate3id = document.getElementById("validate3");
+                                            validate3id.innerText = "You Lost";
+                                            validate3id.style.color = "#EE4B2B";
+                                        }
+                                    }
+                                    else if (num3Value == "") {
+                                        var validate3Element = document.getElementById("validate3");
+                                        validate3Element.innerText = "The input field is empty";
+                                        validate3Element.display = "block";
+                                        
+                                    }
+                                    else {
+                                        var validate3Element = document.getElementById("validate3");
+                                        validate3Element.innerText = "Please Enter a number between 1 to 10";
+                                        validate3Element.display = "block";
+                                        
+
+
+                                    }
+                                })
+                            }
+                        }
+                        else if (num2Value == "") {
+                            var validate2Element = document.getElementById("validate2");
+                            validate2Element.innerText = "The input field is empty";
+                            validate2Element.display = "block";
+                            
+
+                        }
+                        else {
+                            var validate2Element = document.getElementById("validate2");
+                            validate2Element.innerText = "Please Enter a number between 1 to 10";
+                            validate2Element.display = "block";
+                            
+
+                        }
+                    })
+                }
+            }
+            else if (num1Value == "") {
+                
+                var validate1Element = document.getElementById("validate1");
+                validate1Element.innerText = "The input field is empty";
+                validate1Element.display = "block";
+                
+            }
+            else {
+                
+                var validate1Element = document.getElementById("validate1");
+                validate1Element.innerText = "Please Enter a number between 1 to 10";
+                validate1Element.display = "block";
+               
+            }
+        })
+
+    </script>
+</body>
+
+</html>
